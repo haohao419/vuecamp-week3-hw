@@ -1,0 +1,188 @@
+<template>
+<h2>菜單</h2>
+<div id="root">
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="list-group">
+          <a href="#" class="list-group-item list-group-item-action" v-for="item in data" :key="item.id" @click="addToCart(item.id)"
+            ><div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{item.name}}</h5>
+              <small>${{item.price}}</small>
+            </div>
+            <p class="mb-1">{{item.description}}</p></a>
+        </div>
+      </div>
+      <div class="col-md-8" v-if="cart.length">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col" width="50">操作</th>
+              <th scope="col">品項</th>
+              <th scope="col">描述</th>
+              <th scope="col" width="90">數量</th>
+              <th scope="col">單價</th>
+              <th scope="col">小計</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in cart" :key="item.id">
+              <td><button type="button" class="btn btn-sm" @click="deleteCartProduct(item.id)">x</button></td>
+              <td>{{ item.name }}</td>
+              <td><small>{{ item.description }}</small></td>
+              <td>
+                <select class="form-select" v-model="item.amount">
+                  <option v-for="i in 10" :value="i" :key="i">{{i}}</option>
+                </select>
+              </td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.price * item.amount }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-end mb-3">
+          <h5>總計: <span>${{ sumPrice }}</span></h5>
+        </div>
+        <textarea
+          class="form-control mb-3"
+          rows="3"
+          placeholder="備註"
+          v-model="note"
+        ></textarea>
+        <div class="text-end">
+          <button class="btn btn-primary" @click="outputOrder()">送出</button>
+        </div>
+      </div>
+      <div class="col-md-8" v-else><h2>按左側點餐</h2></div>
+    </div>
+    <hr />
+    <div class="row justify-content-center" v-if="order.id">
+      <div class="col-8">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">
+              <h5>訂單</h5>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">品項</th>
+                    <th scope="col">數量</th>
+                    <th scope="col">小計</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in order.cart" :key="item.id">
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.amount}}</td>
+                    <td>{{ item.price * item.amount }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="text-end">備註: <span>{{ order.note }}</span></div>
+              <div class="text-end">
+                <h5>總計: <span>${{ order.total }}</span></h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center" v-else><h2>您還沒送出訂單</h2></div>
+  </div>
+</div>
+
+</template>
+<script setup>
+import {computed, ref} from 'vue'
+const data = ref([
+  {
+    "id": 1,
+    "name": "珍珠奶茶",
+    "description": "香濃奶茶搭配QQ珍珠",
+    "price": 50
+  },
+  {
+    "id": 2,
+    "name": "冬瓜檸檬",
+    "description": "清新冬瓜配上新鮮檸檬",
+    "price": 45
+  },
+  {
+    "id": 3,
+    "name": "翡翠檸檬",
+    "description": "綠茶與檸檬的完美結合",
+    "price": 55
+  },
+  {
+    "id": 4,
+    "name": "四季春茶",
+    "description": "香醇四季春茶，回甘無比",
+    "price": 45
+  },
+  {
+    "id": 5,
+    "name": "阿薩姆奶茶",
+    "description": "阿薩姆紅茶搭配香醇鮮奶",
+    "price": 50
+  },
+  {
+    "id": 6,
+    "name": "檸檬冰茶",
+    "description": "檸檬與冰茶的清新組合",
+    "price": 45
+  },
+  {
+    "id": 7,
+    "name": "芒果綠茶",
+    "description": "芒果與綠茶的獨特風味",
+    "price": 55
+  },
+  {
+    "id": 8,
+    "name": "抹茶拿鐵",
+    "description": "抹茶與鮮奶的絕配",
+    "price": 60
+  }
+]);
+
+const cart = ref([])
+const tempData = ref({})
+const order = ref({})
+const note = ref('')
+
+const addToCart = (id) => {
+    tempData.value = data.value.find(item => item.id === id)
+    tempData.value.amount = 1
+    cart.value.push(tempData.value)
+    console.log(cart.value)
+    tempData.value = {}
+}
+
+const deleteCartProduct = (id) => {
+    let deleteIndex = cart.value.findIndex(item => item.id === id)
+    console.log(deleteIndex)
+    cart.value.splice(deleteIndex, 1)
+    console.log(cart.value)
+}
+
+const sumPrice = computed(() => {
+    let totalPrice = 0
+    cart.value.forEach(item => {
+        totalPrice += item.price * item.amount
+    })
+    return totalPrice})
+
+const outputOrder = () => {
+    order.value = {
+        id: new Date().getTime(),
+        cart: cart.value,
+        note: note.value,
+        total: sumPrice.value
+    }
+
+    cart.value = []
+    note.value = ''
+    console.log(order.value)
+}
+
+</script>
