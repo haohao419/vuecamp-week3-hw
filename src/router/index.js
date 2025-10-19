@@ -41,7 +41,7 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/MenuView.vue'),
     },
-        {
+    {
       path: '/propsemit',
       name: 'propsemit',
       // route level code-splitting
@@ -49,6 +49,37 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/PropsEmit.vue'),
     },
+    {
+      path: '/test',
+      name: 'test',
+      component: () => import('../views/TestView.vue'),
+      children: [
+        {
+          path: 'message',
+          name: 'message',
+          component: () => import('../views/TestMessage.vue'),
+        },
+        {
+          path: 'product',
+          name: 'product',
+          component: () => import('../views/TestProduct.vue'),
+        },
+      ],
+    },
+    {
+      path: '/item',
+      name: 'item',
+      component: () => import('../views/ItemView.vue'),
+      children: [
+        {
+          path: ':id',
+          name: 'id',
+          component: () => import('../views/ItemDetail.vue'),
+        },
+      ],
+    },
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('../views/NotFoundView.vue') },
+
   ],
 })
 
