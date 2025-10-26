@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-md-4">
         <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action" v-for="item in data" :key="item.id" @click="addToCart(item.id)"
+          <a href="#" class="list-group-item list-group-item-action" v-for="item in data" :key="item.id" @click.prevent="addToCart(item.id)"
             ><div class="d-flex w-100 justify-content-between">
               <h5 class="mb-1">{{item.name}}</h5>
               <small>${{item.price}}</small>
