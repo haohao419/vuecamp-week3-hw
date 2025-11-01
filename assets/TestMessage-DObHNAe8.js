@@ -1,1 +1,0 @@
-import{_ as e}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as s,o as c}from"./index-CgtScDVG.js";const o={};function r(t,n){return c(),s("h1",null,"這是message")}const f=e(o,[["render",r]]);export{f as default};
