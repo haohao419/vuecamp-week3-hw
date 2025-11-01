@@ -86,4 +86,11 @@ const router = createRouter({
   ],
 })
 
+router.onError((error, to) => {
+  if (error.message.includes('Failed to fetch dynamically imported module')) {
+    window.location.href = import.meta.env.BASE_URL + to.fullPath;
+  }
+});
+
+
 export default router
