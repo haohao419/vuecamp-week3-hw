@@ -1,0 +1,1 @@
+import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as r,a as n,i as s,j as a,F as c,o as m}from"./index-0_7FYHN0.js";const l={};function _(i,e){const t=a("RouterView");return m(),r(c,null,[e[0]||(e[0]=n("h2",null,"這是商品頁面12345testtest",-1)),s(t)],64)}const u=o(l,[["render",_]]);export{u as default};
