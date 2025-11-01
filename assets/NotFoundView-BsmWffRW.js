@@ -1,0 +1,1 @@
+import{l as s,c as r,a as t,F as n,o as u}from"./index-BAL1gEaV.js";const p={__name:"NotFoundView",setup(a){const o=s();return setTimeout(()=>{o.push("/")},3e3),(l,e)=>(u(),r(n,null,[e[0]||(e[0]=t("h1",null,"此頁面404",-1)),e[1]||(e[1]=t("h2",null,"三秒後跳轉首頁...",-1))],64))}};export{p as default};
