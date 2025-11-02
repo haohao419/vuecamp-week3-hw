@@ -1,1 +1,0 @@
-import{c as t,a,i as s,u as r,R as o,F as n,o as u}from"./index-CrHbaNW9.js";const p={__name:"ItemView",setup(l){return(c,e)=>(u(),t(n,null,[e[0]||(e[0]=a("h2",null,"這是商品頁面12345testtest",-1)),s(r(o))],64))}};export{p as default};
