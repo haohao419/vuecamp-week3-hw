@@ -1,0 +1,1 @@
+import{c as a,a as t,i as r,u as s,R as o,F as n,o as u}from"./index-CrHbaNW9.js";const p={__name:"TestView",setup(l){return(c,e)=>(u(),a(n,null,[e[0]||(e[0]=t("h1",null,"我是測試頁面123",-1)),r(s(o))],64))}};export{p as default};
